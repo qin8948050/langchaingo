@@ -86,7 +86,8 @@ type CompletionRequest struct {
 
 // Completion is a completion.
 type Completion struct {
-	Text string `json:"text"`
+	Text        string  `json:"text"`
+	TotalTokens float64 `json:"total_tokens"`
 }
 
 // CreateCompletion creates a completion.
@@ -109,7 +110,8 @@ func (c *Client) CreateCompletion(ctx context.Context, r *CompletionRequest) (*C
 		return nil, ErrEmptyResponse
 	}
 	return &Completion{
-		Text: resp.Choices[0].Text,
+		Text:        resp.Choices[0].Text,
+		TotalTokens: resp.Usage.TotalTokens,
 	}, nil
 }
 
